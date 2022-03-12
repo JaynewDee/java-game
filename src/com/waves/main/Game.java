@@ -12,8 +12,16 @@ public class Game extends Canvas implements Runnable {
 	public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
 	private Thread thread;
 	private boolean running = false;
+	
+	private Handler handler;
+	
 	public Game() {
 		new Window(WIDTH, HEIGHT, "Let's Build a Game!", this);
+		
+		handler = new Handler();
+		
+		handler.addObject(new Player(100, 100, ID.Player));
+		
 	}
 	
 	public synchronized void start() {
@@ -60,7 +68,7 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	private void tick() {
-		
+		handler.tick();
 	}
 	
 	private void render() {
@@ -71,6 +79,8 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		Graphics g = bs.getDrawGraphics();
+		
+		handler.render(g);
 		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
